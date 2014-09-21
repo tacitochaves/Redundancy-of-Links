@@ -92,12 +92,12 @@ if ( $gateway eq GW_OI && $interface eq INT_OI ) {
                 log_file( LOG, "$msg{EMB147_DOWN} - $date");
             }
             else {
-                #send_mail("Status of Link","$msg{LINK_DOWN} - $date");
+                send_mail("Status of Link","$msg{LINK_DOWN} - $date");
             }
         }
         else {
             log_file( LOG, "$msg{OI_DOWN} - $date" );
-            #send_mail("Status of Link","$msg{OI_DOWN} - $date");
+            send_mail("Status of Link","$msg{OI_DOWN} - $date");
         }
     }
     else {
@@ -113,7 +113,7 @@ if ( $gateway eq GW_OI && $interface eq INT_OI ) {
         while ( my $row = $SQL->fetchrow_hashref() ) {
             print lc "$row->{name} $row->{description}\n";
         }
-        #send_mail("Status of Link","$msg{OI_UP} - $date");
+        send_mail("Status of Link","$msg{OI_UP} - $date");
     }
 }
 elsif ( $gateway eq GW_EMB34 && "$interface" eq INT_EMB34 ) {
@@ -125,7 +125,7 @@ elsif ( $gateway eq GW_EMB34 && "$interface" eq INT_EMB34 ) {
         route_del(GW_EMB34);
         log_file( LOG, "LINK OI VOLTOU - $date" );
         $dbh->do("UPDATE Current SET id_status = 1 WHERE id_link = 3");
-        #send_mail("Status of Link","LINK DA OI VOLTOU - $date");
+        send_mail("Status of Link","LINK DA OI VOLTOU - $date");
         restore_squid_oi(SQUID);
     }
     else {
@@ -139,7 +139,7 @@ elsif ( $gateway eq GW_EMB34 && "$interface" eq INT_EMB34 ) {
             route_del(GW_EMB34);
             comment_squid_emb_34();
             log_file( LOG, "$msg{EMB34_DOWN} - $date" );
-            ##send_mail("Status of Link","$msg{EMB34_DOWN} - $date");
+            #send_mail("Status of Link","$msg{EMB34_DOWN} - $date");
             $packet_loss = get_ping(INT_EMB147);
 
            # checks if the tertiary link is down before putting in default route
@@ -151,11 +151,11 @@ elsif ( $gateway eq GW_EMB34 && "$interface" eq INT_EMB34 ) {
                 restoure_squid_emb_34();
             }
             else {
-               # send_mail("Status of Link","$msg{EMB34_DOWN} - $date");
+                send_mail("Status of Link","$msg{EMB34_DOWN} - $date");
             }
         }
         else {
-             #send_mail("Status of Link","LINK DA OI CONTINUA DOWN - $date");
+             send_mail("Status of Link","LINK DA OI CONTINUA DOWN - $date");
         }
     }
 }
@@ -167,7 +167,7 @@ elsif ( $gateway eq GW_EMB147 && $interface eq INT_EMB147 ) {
         restore_squid_oi(SQUID);
         log_file( LOG, "LINK OI VOLTOU - $date" );
         $dbh->do("UPDATE Current SET id_status = 1 WHERE id_link = 3");
-        #send_mail("Status of Link","LINK DA OI VOLTOU - $date");
+        send_mail("Status of Link","LINK DA OI VOLTOU - $date");
     }
     else {
         route_del(GW_OI);
@@ -182,7 +182,7 @@ elsif ( $gateway eq GW_EMB147 && $interface eq INT_EMB147 ) {
             log_file( LOG, "NO MOMENTO TODOS OS LINKS ESTÃO DOWN - $date" );
         }
         else {
-            #send_mail("Status of Link","LINK DA OI CONTINUA DOWN - $date");
+            send_mail("Status of Link","LINK DA OI CONTINUA DOWN - $date");
         }
     }
 }
